@@ -17,7 +17,7 @@ app.use(cors({ exposedHeaders : "Authorization" }))
 app.use(middleware.requestLogger)
 
 // @expose public folder
-// app.use("/public", express.static("public"))
+app.use("/public", express.static("public"))
 
 // @root route
 app.get("/", (req, res) => {
