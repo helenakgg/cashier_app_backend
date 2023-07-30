@@ -6,6 +6,7 @@ export const RESTRICTED = "Restricted";
 export const USER_NOT_FOUND = "User not found";
 export const USER_ALREADY_EXISTS = "User already exists";
 export const USER_DOES_NOT_EXISTS = "User does not exists";
+export const USER_IS_DISABLE = "User is disable";
 export const INVALID_CREDENTIALS = "Invalid credentials";
 export const BAD_REQUEST = "Bad request";
 export const FORBIDDEN = "Forbidden";

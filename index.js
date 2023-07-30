@@ -25,9 +25,9 @@ app.get("/", (req, res) => {
 })
 
 // @use router
-// import AuthRouters from "./src/controllers/auth/routers.js"
+import AuthRouters from "./src/controllers/auth/routers.js"
 
-// app.use("/api/auth", AuthRouters)
+app.use("/api/auth", AuthRouters)
 
 
 // @global error handler
