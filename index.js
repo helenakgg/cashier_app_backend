@@ -26,8 +26,10 @@ app.get("/", (req, res) => {
 
 // @use router
 import AuthRouters from "./src/controllers/auth/routers.js"
+import AdminCashierRouters from "./src/controllers/admin/m-cashier/routers.js"
 
 app.use("/api/auth", AuthRouters)
+app.use("/api/admin/m-cashier", AdminCashierRouters)
 
 
 // @global error handler

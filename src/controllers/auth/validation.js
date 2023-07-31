@@ -31,40 +31,6 @@ export const resetPasswordSchema = Yup.object().shape({
     .required("Password is required")
     .oneOf([Yup.ref('newPassword'), null], 'Must match "New Password" field value'),
 });
-
-export const changePasswordSchema = Yup.object({
-    currentPassword: Yup.string()
-      .required("Password is required"),
-    newPassword: Yup.string()
-      .required("Password is required")
-      .notOneOf([Yup.ref('currentPassword')],"New and Current Password can't be the same")
-      .min(6, 'password must contain 6 or more characters with at least one of each: uppercase, special character')
-      .minUppercase(1, 'password must contain at least 1 upper case letter')
-      .minSymbols(1, 'password must contain at least 1 special character'),
-    confirmPassword: Yup.string()
-      .required("Password is required")
-      .oneOf([Yup.ref('newPassword'), null], 'Must match "New Password" field value'),
-  });
   
-  export const changeUsernameSchema = Yup.object().shape({
-    username : Yup.string()
-    .min(5,'Username minimum 5 characters'),
-  });
-  
-  export const changeEmailSchema = Yup.object({
-    currentEmail : Yup.string().email("Invalid email").required("Email is required"),
-    newEmail : Yup.string().email("Invalid email").required("New Email is required")
-  })
-
-  export const changePhoneSchema = Yup.object().shape({
-    currentPhone: Yup.string()
-      .matches(/[0-9]/,'phone must be a number')
-      .matches(/0[0-9]/,'phone must be a number and start with 0')
-      .min(10,'phone must contain 10 or more digits'),
-    newPhone: Yup.string()
-      .matches(/[0-9]/,'phone must be a number')
-      .matches(/0[0-9]/,'phone must be a number and start with 0')
-      .min(10,'phone must contain 10 or more digits') 
-  });
   
   

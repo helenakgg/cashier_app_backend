@@ -38,6 +38,8 @@ export const register = async (req, res, next) => {
 
         // @delete unused data from response
         delete user?.dataValues?.password;
+        delete user?.dataValues?.otp;
+        delete user?.dataValues?.expiredOtp;
        
         // @generate access token
         const accessToken = helpers.createToken({ uuid: user?.dataValues?.uuid, role : user?.dataValues?.role });
@@ -80,7 +82,7 @@ export const login = async (req, res, next) => {
         if (!userExists) throw ({ status : 400, message : error.USER_DOES_NOT_EXISTS })
 
         // @check if user is disable
-        if (userExists?.dataValues?.isDisable === 1) throw ({ status : 400, message : error.USER_IS_DISABLE });
+        if (userExists?.dataValues?.isDisable === 1) throw ({ status : 400, message : error.CASHIER_IS_DISABLE });
 
         // @check if password is correct
         const isPasswordCorrect = helpers.comparePassword(password, userExists?.dataValues?.password);
@@ -147,7 +149,7 @@ export const forgotPassword = async (req, res, next) => {
         // @generate reset token
         const resetToken = helpers.createToken({ uuid: User?.dataValues?.uuid, role : User?.dataValues?.role });
         
-        const template = fs.readFileSync(path.join(process.cwd(), "templates", "otp.html"), "utf8");
+        const template = fs.readFileSync(path.join(process.cwd(), "templates", "resetpass.html"), "utf8");
 
         const message = handlebars.compile(template)({otpToken, link : config.REDIRECT_URL+`/auth/reset-password/rp-${isUserExist?.dataValues?.uuid}`})
 
