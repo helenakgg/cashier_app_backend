@@ -1,6 +1,6 @@
 import db from "../database/index.js";
 
-export const Product = db.Sequelize.define("products", {
+export const Product = db.sequelize.define("products", {
     productId: {
         type: db.Sequelize.INTEGER,
         primaryKey: true,

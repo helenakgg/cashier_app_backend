@@ -1,7 +1,7 @@
 import db from "../database/index.js";
 
-export const Transaction = db.Sequelize.define("transactions", {
-    transactiontId: {
+export const Transaction = db.sequelize.define("transactions", {
+    transactionId: {
         type: db.Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -20,26 +20,15 @@ export const Transaction = db.Sequelize.define("transactions", {
         allowNull : false,
         defaultValue : 0
     },
-    paymentAmount : {
-        type : db.Sequelize.INTEGER,
-        allowNull : false,
-        defaultValue : 0
-    },
-    change : {
-        type : db.Sequelize.INTEGER,
-        allowNull : false,
-        defaultValue : 0
-    },
     salesReportId: {
         type : db.Sequelize.INTEGER,
         allowNull : true
     },
-   
 },
 { timestamps: false }
 );
 
-export const ProductSold = db.Sequelize.define("products_sold", {
+export const ProductSold = db.sequelize.define("products_solds", {
     productSoldId : {
         type : db.Sequelize.INTEGER,
         primaryKey : true,
@@ -68,7 +57,32 @@ export const ProductSold = db.Sequelize.define("products_sold", {
 { timestamps: false }
 );
 
-export const SalesReport = db.Sequelize.define("sales_reports", {
+export const Payment = db.sequelize.define("payments", {
+    paymentId: {
+      type: db.Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
+    transactionId: {
+      type: db.Sequelize.INTEGER,
+      allowNull: false,
+    },
+    paymentAmount: {
+      type: db.Sequelize.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
+    change: {
+      type: db.Sequelize.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
+}, 
+{ timestamps: false }
+);
+
+export const SalesReport = db.sequelize.define("sales_reports", {
     salesReportId : {
         type : db.Sequelize.INTEGER,
         primaryKey : true,

@@ -27,10 +27,14 @@ app.get("/", (req, res) => {
 // @use router
 import AuthRouters from "./src/controllers/auth/routers.js"
 import AdminCashierRouters from "./src/controllers/admin/m-cashier/routers.js"
+import CashierRouters from "./src/controllers/cashier/routers.js"
+
+
 
 app.use("/api/auth", AuthRouters)
 app.use("/api/admin/m-cashier", AdminCashierRouters)
 
+app.use("/api/cashier", CashierRouters)
 
 // @global error handler
 app.use(middleware.errorHandler)
