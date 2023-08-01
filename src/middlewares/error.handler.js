@@ -7,6 +7,7 @@ export const USER_NOT_FOUND = "User not found";
 export const USER_ALREADY_EXISTS = "User already exists";
 export const CASHIER_ALREADY_EXISTS = "Cashier already exists";
 export const USERNAME_ALREADY_EXISTS = "Username already exists";
+export const CATEGORY_ALREADY_EXISTS = "Category already exists";
 export const USER_DOES_NOT_EXISTS = "User does not exists";
 export const CASHIER_DOES_NOT_EXISTS = "Cashier does not exists";
 export const USER_IS_NOT_CASHIER = "User is not Cashier";
