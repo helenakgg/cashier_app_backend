@@ -27,14 +27,14 @@ app.get("/", (req, res) => {
 import AuthRouters from "./src/controllers/auth/routers.js"
 import AdminCashierRouters from "./src/controllers/admin/m-cashier/routers.js"
 import AdminCategoryRouters from "./src/controllers/admin/m-category/routers.js"
-// import AdminProductRouters from "./src/controllers/admin/m-product/routers.js"
+import AdminProductRouters from "./src/controllers/admin/m-product/routers.js"
 // import AdminReportRouters from "./src/controllers/admin/m-report/routers.js"
 import CashierRouters from "./src/controllers/cashier/routers.js"
 
 app.use("/api/auth", AuthRouters)
 app.use("/api/admin/m-cashier", AdminCashierRouters)
 app.use("/api/admin/m-category", AdminCategoryRouters)
-// app.use("/api/admin/m-product", AdminProductRouters)
+app.use("/api/admin/m-product", AdminProductRouters)
 // app.use("/api/admin/m-report", AdminReportRouters)
 app.use("/api/cashier", CashierRouters)
 

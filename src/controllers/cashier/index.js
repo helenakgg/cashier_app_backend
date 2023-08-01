@@ -1,7 +1,7 @@
 import { ValidationError } from "yup"
 import cloudinary from 'cloudinary'
 import * as error from "../../middlewares/error.handler.js"
-import { User, Category, Product, Transaction, ProductSold, Payment, SalesReport } from "../../models/relation.js"
+import { User, Category, Product, Transaction, ProductSold, Payment } from "../../models/relation.js"
 import db from "../../database/index.js"
 import * as validation from "./validation.js"
 
