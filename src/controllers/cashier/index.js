@@ -3,6 +3,7 @@ import handlebars from "handlebars"
 import fs from "fs"
 import path from "path"
 import moment from "moment"
+import cloudinary from 'cloudinary'
 
 import * as config from "../../config/index.js"
 import * as helpers from "../../helpers/index.js"
@@ -180,4 +181,50 @@ export const payment = async (req, res, next) => {
         }
         next(error);
     }
+}
+
+// @upload / update profile picture
+export const updateProfileImg = async (req, res, next) => {
+  const transaction = await db.sequelize.transaction();
+  try {
+      // @check if image is uploaded
+      if (!req.file) {
+          throw new ({ status: 400, message: "Please upload an image." })
+      }
+
+      console.log(req.file)
+
+      // @delete the old image
+      const cashier = await User?.findOne( { where : { uuid : req.cashier.uuid }, attributes : ['profileImg'] } );
+      if (cashier?.dataValues?.profileImg){
+          cloudinary.v2.api
+          .delete_resources([`${cashier?.dataValues?.profileImg}`],
+          { type: 'upload', resource_type: 'image'})
+          .then(console.log);
+      }
+
+      // @update the user profile
+      await User?.update({ profileImg : req?.file?.path }, { where : { uuid : req.cashier.uuid } })
+
+      // @send response
+      res.status(200).json({ message : "Image uploaded successfully.", imageUrl : req.file?.path })
+      
+      await transaction.commit();
+  } catch (error) {
+      await transaction.rollback();
+      next(error)
+  }
+}
+
+// @get profile picture
+export const getProfileImg = async (req, res, next) => {
+  try {
+      const cashier = await User?.findOne({ where : { uuid : req.cashier.uuid }});
+      if (!cashier) throw ({ status: 400, message: error.CASHIER_DOES_NOT_EXISTS });
+      if (!cashier.profileImg) throw ({ status: 404, message: "Profile picture is empty" });
+
+      res.status(200).json( cashier.profileImg )
+  } catch (error) {
+    next(error)
+  }
 }

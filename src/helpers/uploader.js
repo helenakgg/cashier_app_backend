@@ -13,7 +13,7 @@ export const createCloudinaryStorage = (directory) => new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
         folder: directory,
-        allowedFormats: ['jpeg', 'png', 'jpg'],
+        allowedFormats: ['jpg', 'png', 'gif'],
     }
 })
 
