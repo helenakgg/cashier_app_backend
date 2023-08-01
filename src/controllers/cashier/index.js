@@ -1,12 +1,5 @@
 import { ValidationError } from "yup"
-import handlebars from "handlebars"
-import fs from "fs"
-import path from "path"
-import moment from "moment"
 import cloudinary from 'cloudinary'
-
-import * as config from "../../config/index.js"
-import * as helpers from "../../helpers/index.js"
 import * as error from "../../middlewares/error.handler.js"
 import { User, Category, Product, Transaction, ProductSold, Payment, SalesReport } from "../../models/relation.js"
 import db from "../../database/index.js"
@@ -155,8 +148,7 @@ export const createTransaction = async (req, res, next) => {
 export const payment = async (req, res, next) => {
     try{
         const { transactionId } = req.params;
-        const transaction = await Transaction?.findOne({ where: { transactionId },
-            attributes: { exclude: ['userUserId', 'salesReportSalesReportId'] }});
+        const transaction = await Transaction?.findOne({ where: { transactionId }});
 
         if (!transaction) {
             return res.status(404).json({ error: `Transaction with ID ${transactionId} not found.` });

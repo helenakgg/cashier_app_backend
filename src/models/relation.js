@@ -4,10 +4,10 @@ import { Product } from "./product.js";
 import { Transaction, ProductSold, Payment, SalesReport } from "./transaction.js";
 
 // @define relations
-User.hasMany(Category); //admin
+// User.hasMany(Category); //admin
 User.hasMany(Product); //admin
 User.hasMany(SalesReport); //admin
-User.hasMany(Transaction); //cashier
+// User.hasMany(Transaction); //cashier
 
 Category.hasMany(Product);
 Category.belongsTo(User, { foreignKey : 'userId' });
@@ -26,7 +26,7 @@ ProductSold.belongsTo(Transaction, { foreignKey : 'transactionId' });
     
 Payment.belongsTo(Transaction, { foreignKey : 'transactionId' });
 
-SalesReport.hasMany(Transaction);
+// SalesReport.hasMany(Transaction);
 SalesReport.belongsTo(User, { foreignKey : 'userId' })
 
 export { User, Category, Product, Transaction, ProductSold, Payment, SalesReport }
