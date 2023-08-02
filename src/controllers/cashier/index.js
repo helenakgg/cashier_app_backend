@@ -90,7 +90,7 @@ export const getProductList = async (req, res, next) => {
 // @create transaction
 export const createTransaction = async (req, res, next) => {
     try{
-        const { products } = req.body; // Frontend sends an array of { productId, qty }
+        const { products, total } = req.body; // Frontend sends an array of { productId, qty, subtotal}
 
         // Step 1: Create a new transaction record
         const { uuid } = req.cashier;
@@ -100,27 +100,12 @@ export const createTransaction = async (req, res, next) => {
         const transaction = await Transaction?.create({
         userId: cashierId,
         createdAt: new Date(),
-        total: 0,
+        total
         });
 
-        let total = 0;
-
-        // Step 2: Add products to the transaction and calculate the total
+        // Step 2: Add products to the transaction
         for (const product of products) {
-        const { productId, qty } = product;
-  
-        // Fetch the product details from the database
-        const productDetails = await Product.findByPk(productId, {
-            attributes: ["productId", "productName", "price"]});
-  
-        if (!productDetails) {
-          // Product not found
-          return res.status(404).json({ error: `Product with ID ${productId} not found.` });
-        }
-
-        // Calculate the subtotal for this product
-        const subtotal = productDetails.price * qty;
-        total += subtotal;
+        const { productId, qty, subtotal } = product;
 
         // Step 3: Create a new productSold record
         await ProductSold?.create({
@@ -130,9 +115,6 @@ export const createTransaction = async (req, res, next) => {
             subtotal,
         });
         }
-
-        // Step 4: Update the total in the transaction record
-        await transaction.update({ total });
 
         // Return the created transaction     
         res.status(201).json({type : "success", message : "Create transaction success", transaction});
@@ -153,12 +135,10 @@ export const payment = async (req, res, next) => {
         if (!transaction) {
             return res.status(404).json({ error: `Transaction with ID ${transactionId} not found.` });
         }
-        const total = transaction.total;
-
-        const { paymentAmount } = req.body;
+        
+        const { paymentAmount, change } = req.body;
 
         // Create the payment record
-        const change = paymentAmount - total;
         const payment = await Payment.create({
             transactionId: transaction.transactionId,
             paymentAmount,
