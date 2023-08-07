@@ -151,7 +151,7 @@ export const forgotPassword = async (req, res, next) => {
         
         const template = fs.readFileSync(path.join(process.cwd(), "templates", "resetpass.html"), "utf8");
 
-        const message = handlebars.compile(template)({otpToken, link : config.REDIRECT_URL+`/auth/reset-password/rp-${isUserExist?.dataValues?.uuid}`})
+        const message = handlebars.compile(template)({otpToken, link : config.REDIRECT_URL+`/reset-password/rp-${isUserExist?.dataValues?.uuid}`})
 
         const mailOptions = {
             from: config.GMAIL,
@@ -166,7 +166,7 @@ export const forgotPassword = async (req, res, next) => {
         })
 
         res.status(200).json({ 
-            message : "Check your email to get you reset password link.",
+            message : "Check your email to get your reset password link.",
         })
     } catch (error) {
         if (error instanceof ValidationError) {
